@@ -1,0 +1,20 @@
+{
+  "name": "q10-genius-backend",
+  "version": "1.0.0",
+  "description": "API Proxy for Q10 Academic System - Genius Idiomas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "cors": "^2.8.5",
+    "express-rate-limit": "^7.4.0",
+    "dotenv": "^16.4.5",
+    "uuid": "^10.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
