@@ -390,19 +390,27 @@ router.all('/*', async (req, res) => {
   const path = req.params[0] || req.path;
   log(req.method, path, 'generic proxy handler');
 
-  // Map known Q10 API endpoints
+  // Map known Q10 API endpoints (all lowercase for matching)
   const endpointMap = {
     'programasacademicos': data.programas,
+    'programas': data.programas,
     'periodosacademicos': data.periodos,
+    'periodos': data.periodos,
     'sedes': data.sedes,
     'contactos': data.contactos,
     'estudiantes': data.estudiantes,
     'oportunidades': data.oportunidades,
     'ordenesdepago': data.ordenesDePago,
+    'ordenespago': data.ordenesDePago,
     'conceptosdepago': data.conceptosDePago,
     'inscripciones': data.inscripciones,
     'matriculas': data.matriculas,
     'matriculasprogramas': data.matriculas,
+    'estadocuentaestudiantes': data.estadocuentaestudiantes,
+    'pagospendientes': data.pagosPendientes,
+    'pagos': data.pagos,
+    'negocios': data.negocios,
+    'actividades': data.actividades,
   };
 
   // Extract the base endpoint (first segment of the path)
@@ -413,6 +421,15 @@ router.all('/*', async (req, res) => {
   const dataset = endpointMap[baseEndpoint];
 
   if (!dataset) {
+    // For unknown endpoints, return empty array for GET, success for POST
+    if (req.method === 'POST') {
+      const id = uuidv4().slice(0, 8).toUpperCase();
+      return res.status(201).json({
+        success: true,
+        Codigo: id,
+        message: 'Registro creado exitosamente',
+      });
+    }
     return res.json([]);
   }
 
@@ -427,9 +444,19 @@ router.all('/*', async (req, res) => {
 
   if (req.method === 'POST') {
     const id = mockId(baseEndpoint.slice(0, 3).toUpperCase());
-    const newItem = { Codigo: id, Id: id, ...req.body };
+    const newItem = {
+      Codigo: id,
+      Id: id,
+      ...req.body,
+      Fecha_creacion: new Date().toISOString().slice(0, 10),
+    };
     dataset.push(newItem);
-    return res.status(201).json(newItem);
+    return res.status(201).json({
+      success: true,
+      Codigo: id,
+      message: 'Registro creado exitosamente',
+      data: newItem,
+    });
   }
 
   if (req.method === 'PUT') {
