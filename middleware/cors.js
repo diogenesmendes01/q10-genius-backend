@@ -26,7 +26,7 @@ function buildCorsMiddleware() {
       callback(new Error(`CORS: origin ${origin} not allowed`));
     },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-ID', 'X-Q10-Key', 'Ocp-Apim-Subscription-Key'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-ID', 'X-Q10-Key', 'Api-Key'],
     credentials: true,
     maxAge: 86400,
   });

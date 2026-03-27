@@ -6,7 +6,7 @@ const router = Router();
 
 const Q10_BASE = 'https://api.q10.com/v1';
 const headers = () => ({
-  'Ocp-Apim-Subscription-Key': process.env.Q10_API_KEY,
+  'Api-Key': process.env.Q10_API_KEY,
   'Content-Type': 'application/json',
 });
 
@@ -99,7 +99,7 @@ router.post('/', async (req, res) => {
       Codigo_contacto: contactId,
     };
 
-    const student = await q10Call('POST', '/estudiantes', studentData);
+    const student = await q10Call('POST', '/usuarios', studentData);
     studentId = student.Codigo_estudiante || student.Id || student.id;
     steps.push({ step: 2, name: 'student', status: 'ok', id: studentId });
     console.log(`[enrollment:${trackingRef}] Student registered: ${studentId}`);

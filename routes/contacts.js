@@ -3,7 +3,7 @@ const router = Router();
 
 const Q10_BASE = 'https://api.q10.com/v1';
 const headers = () => ({
-  'Ocp-Apim-Subscription-Key': process.env.Q10_API_KEY,
+  'Api-Key': process.env.Q10_API_KEY,
   'Content-Type': 'application/json',
 });
 
